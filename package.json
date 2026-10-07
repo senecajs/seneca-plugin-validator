@@ -1,12 +1,11 @@
 {
   "name": "seneca-plugin-validator",
-  "version": "0.6.1",
-  "description": "seneca-plugin-validator",
+  "version": "0.7.0",
+  "description": "Validates the shape of a Seneca plugin from inside the plugin's own test suite.",
   "main": "plugin-validator.js",
   "scripts": {
-    "test": "node plugin-validator.js",
-    "prettier": "prettier --write *.js lib/*.js bin/*.js test/*.js",
-    "coveralls": "lab -s -P test -r lcov | coveralls",
+    "test": "node --test \"test/*.test.js\"",
+    "prettier": "prettier --write *.js test/*.js \"docs/examples/**/*.js\"",
     "reset": "npm run clean && npm i && npm test",
     "clean": "rm -rf node_modules package-lock.json yarn.lock",
     "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
@@ -14,19 +13,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rjrodger/seneca-plugin-validator.git"
+    "url": "git+https://github.com/senecajs/seneca-plugin-validator.git"
   },
+  "keywords": [
+    "seneca",
+    "plugin",
+    "validator",
+    "test"
+  ],
   "author": "Richard Rodger",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rjrodger/seneca-plugin-validator/issues"
+    "url": "https://github.com/senecajs/seneca-plugin-validator/issues"
   },
-  "homepage": "https://github.com/rjrodger/seneca-plugin-validator#readme",
-  "dependencies": {
-    "@hapi/code": "^8.0.1",
-    "@hapi/joi": "^17.1.0",
-    "@hapi/lab": "^22.0.3",
-    "coveralls": "^3.0.9",
-    "prettier": "^1.19.1"
+  "homepage": "https://github.com/senecajs/seneca-plugin-validator#readme",
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "seneca": "^4.0.0-rc5"
   }
 }
