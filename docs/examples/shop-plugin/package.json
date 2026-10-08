@@ -1,0 +1,16 @@
+{
+  "name": "shop-plugin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The plugin project from the seneca-plugin-validator tutorial.",
+  "main": "shop.js",
+  "scripts": {
+    "test": "node --test",
+    "prettier": "prettier --write *.js test/*.js"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "seneca": "^4.0.0-rc5",
+    "seneca-plugin-validator": "^0.7.0"
+  }
+}

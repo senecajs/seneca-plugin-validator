@@ -1,0 +1,9 @@
+{
+  "name": "well-formed",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node --test",
+    "prettier": "prettier --write *.js test/*.js"
+  }
+}
