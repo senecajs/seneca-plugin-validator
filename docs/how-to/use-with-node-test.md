@@ -1,8 +1,7 @@
 # Use with node:test
 
 How to run the validator in a test suite that uses the Node.js test
-runner (`node --test`, Node.js 20 or later; the examples here were run
-on Node.js 24 and 22).
+runner (`node --test`, Node.js 24 or later, which Seneca 4 requires).
 
 ## 1. Install and add the prettier script
 

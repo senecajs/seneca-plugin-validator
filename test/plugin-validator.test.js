@@ -225,7 +225,7 @@ describe('sample plugin on Seneca', () => {
     // No error handler here: the error reply is expected. quiet() keeps
     // the expected error out of the test output.
     const seneca = Seneca().test().quiet().use(SamplePlugin)
-    await new Promise((resolve) => seneca.ready(resolve))
+    await seneca.ready()
 
     await assert.rejects(
       seneca.post('role:sample,cmd:greet', { name: '' }),
@@ -239,7 +239,7 @@ describe('sample plugin on Seneca', () => {
       },
     )
 
-    await new Promise((resolve) => seneca.close(resolve))
+    await seneca.close()
   })
 
   test('rejects options that do not match the defaults', async () => {

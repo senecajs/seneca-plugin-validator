@@ -6,7 +6,7 @@ Seneca 4. At the end you have a project layout you can reuse for your
 own plugins. The finished files are in
 [examples/shop-plugin](../examples/shop-plugin/).
 
-You need Node.js 22 or later.
+You need Node.js 24 or later.
 
 ## 1. Create the project
 
@@ -35,7 +35,7 @@ of the checks looks for it) and the development dependencies:
   },
   "devDependencies": {
     "prettier": "^3.6.2",
-    "seneca": "^4.0.0-rc5",
+    "seneca": "^4.0.0",
     "seneca-plugin-validator": "^0.7.0"
   }
 }
@@ -141,7 +141,7 @@ npm test
 ```
 
 The output (from `node --test docs/examples/shop-plugin/test/shop.test.js`
-in this repository, with `seneca@4.0.0-rc5` on Node.js 24):
+in this repository, with `seneca@4.0.0` on Node.js 26):
 
 ```
 ✔ shop is a well formed plugin (1.057748ms)

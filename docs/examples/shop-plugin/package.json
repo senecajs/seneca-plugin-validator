@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "prettier": "^3.6.2",
-    "seneca": "^4.0.0-rc5",
+    "seneca": "^4.0.0",
     "seneca-plugin-validator": "^0.7.0"
   }
 }
