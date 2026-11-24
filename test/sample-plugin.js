@@ -3,7 +3,7 @@
 
 // A small plugin written in the style Seneca 4 expects: a definition
 // function with a single options parameter that uses `this` as the
-// Seneca instance, plain default options (a Gubu shape), an errors map
+// Seneca instance, plain default options (a shape), an errors map
 // and exports. The tests validate it and load it into Seneca.
 
 module.exports = sample

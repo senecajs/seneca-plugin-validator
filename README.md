@@ -7,10 +7,11 @@ Checks, from inside a plugin's own test suite, that a
 [Seneca](https://senecajs.org) plugin project has the shape Seneca
 expects: the test folder sits inside the project, the project formats
 its code with prettier, and the plugin module exports a definition
-function with the signature that Seneca 3.38 and Seneca 4 accept. The
-validator has no dependencies and does not load Seneca, so it works in
-the test suites of plugins written for Seneca 3 and for the Seneca 4
-prerelease (`seneca@4.0.0-rc5` and later), with any test runner.
+function with the signature that Seneca 4 accepts. The validator has no
+dependencies and does not load Seneca, so it works with any test
+runner. Version 0.7 is for plugins written for Seneca 4 (peer
+dependency `seneca` `^4.0.0`); plugins that are still tested on
+Seneca 3 can stay on version 0.6.
 
 | ![Voxgig](https://www.voxgig.com/res/img/vgt01r.png) | This open source module is sponsored and supported by [Voxgig](https://www.voxgig.com). |
 |---|---|
@@ -18,7 +19,7 @@ prerelease (`seneca@4.0.0-rc5` and later), with any test runner.
 ## Install
 
 ```sh
-npm install --save-dev seneca-plugin-validator
+npm install --save-dev seneca@^4 seneca-plugin-validator
 ```
 
 The validator is a development dependency of the plugin project it
@@ -113,10 +114,9 @@ npm test
 ```
 
 The tests use the Node.js test runner (`node --test`) and load the
-sample plugin in `test/` into the Seneca 4 prerelease
-(`seneca@^4.0.0-rc5`, a development dependency). Node.js 24 is the
-default target and Node.js 22 is also supported. Format changes with
-`npm run prettier` before committing.
+sample plugin in `test/` into Seneca 4 (`seneca@^4.0.0`, a
+development dependency). Node.js 24 or later is required. Format
+changes with `npm run prettier` before committing.
 
 The CI workflow for GitHub Actions is provided as a patch in
 [.patches](.patches/), because adding files under `.github/workflows/`
@@ -130,12 +130,12 @@ the Senecajs organization, and version 0.6 (2020) used `@hapi/code`
 assertions inside a `@hapi/lab` test suite. Version 0.7 removed every
 runtime dependency, moved the tests to `node --test`, added the
 definition signature check and this documentation. Plugins such as
-`seneca-mem-store` and `seneca-promisify` run it in their test suites.
+`@seneca/mem-store` run it in their test suites.
 
 | | Supported |
 | --- | --- |
-| Seneca | Any version in the plugin's own tests: the validator does not load Seneca. The checks describe what Seneca 3.38 and Seneca 4 (from `4.0.0-rc5`) accept. The tests in this repository run against the Seneca 4 prerelease. |
-| Node.js | 16 or later; tested on 24 and 22. |
+| Seneca | Seneca 4 (peer dependency `seneca` `^4.0.0`). The validator does not load Seneca; the checks describe what Seneca 4 accepts, and the tests in this repository load the sample plugin into Seneca 4. Plugins tested on Seneca 3 can use version 0.6. |
+| Node.js | 24 or later. |
 | Test runners | Any runner that accepts an async function as a test body: `node:test`, `@hapi/lab`, `jest`, `mocha`. |
 
 Licensed under [MIT](LICENSE). See [CHANGES.md](CHANGES.md) for the

@@ -18,8 +18,7 @@ lab.test('validate', MakePluginValidator(Plugin, module))
 ```
 
 lab passes its `flags` object to the test function; the validate
-function ignores it. This is how `seneca-mem-store` and
-`seneca-promisify` run the validator. The explicit form works too:
+function ignores it. The explicit form works too:
 
 ```js
 lab.test('validate', async () => {

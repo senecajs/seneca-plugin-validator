@@ -27,8 +27,24 @@
     "url": "https://github.com/senecajs/seneca-plugin-validator/issues"
   },
   "homepage": "https://github.com/senecajs/seneca-plugin-validator#readme",
+  "files": [
+    "plugin-validator.js",
+    "LICENSE",
+    "README.md",
+    "CHANGES.md",
+    "docs"
+  ],
+  "peerDependencies": {
+    "seneca": "^4.0.0"
+  },
   "devDependencies": {
     "prettier": "^3.6.2",
-    "seneca": "^4.0.0-rc5"
+    "seneca": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

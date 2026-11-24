@@ -33,11 +33,13 @@ follow them so that applications can rely on them:
 * `defaults`, a static property, holds the default options. Seneca
   validates the options passed by the application against it when the
   plugin loads, and the plugin function receives the merged result. In
-  Seneca 4 the defaults are a [Gubu](https://github.com/rjrodger/gubu)
-  shape: plain values fix the type of each option (`tax: 0.2` means a
-  number that defaults to `0.2`), and Gubu builders express anything
-  more. An option of the wrong type is a fatal `invalid_plugin_option`
-  error.
+  Seneca 4 the defaults are a [shape](https://github.com/rjrodger/shape)
+  (the successor of Gubu): plain values fix the type of each option
+  (`tax: 0.2` means a number that defaults to `0.2`), and anything
+  more is written with the builders that Seneca passes to a `defaults`
+  function, `defaults = ({ valid }) => ({ ... })`. An option of the
+  wrong type, or an option that the defaults do not name, is a fatal
+  `invalid_plugin_option` error.
 * `errors`, a static property, maps error codes to message templates.
   `this.error(code, details)` and `this.fail(code, details)` inside
   the plugin build errors from it, so that callers can switch on
@@ -96,27 +98,34 @@ consequences of the same mistake.
 
 ## Seneca 3 and Seneca 4
 
-The validator does not load Seneca and does not depend on it, so a
-plugin's test suite can run it against any Seneca version. The checks
-describe what both Seneca 3.38 and Seneca 4 accept. For plugin authors
-moving to Seneca 4, the differences that touch the plugin shape are:
+The validator does not load Seneca. Version 0.7 declares the peer
+dependency `seneca` `^4.0.0`, because it is meant for plugins written
+for Seneca 4, although its checks also hold for Seneca 3.38. For plugin
+authors moving to Seneca 4, the differences that touch the plugin shape
+are:
 
 * **Definition signature.** Unchanged: both versions reject two
   parameters with `unsupported_legacy_plugin`.
 * **`defaults`.** Seneca 3.38 validates `defaults` written as a Joi
-  schema with Joi, and plain or Gubu defaults with Gubu. Seneca 4 does
-  not understand Joi: a Joi schema (an object with `$_root`) is deep
-  merged with the options without any validation, while plain values
-  and Gubu shapes are validated. Convert Joi defaults to plain values
-  or Gubu shapes to keep option validation.
+  schema with Joi, and plain or Gubu defaults with Gubu. Seneca 4
+  validates with [shape](https://github.com/rjrodger/shape) 11, the
+  successor of Gubu. It removes all Joi handling: a `defaults` function
+  receives `{ valid }` instead of `Joi`, and a Joi schema is not
+  recognized. Shapes built with Gubu fail with `plugin_gubu_shape`.
+  Write plain default values, or a `defaults({ valid })` function that
+  uses the builders Seneca passes, and do not bundle Gubu. Plain object
+  defaults are closed: an option that they do not name is rejected,
+  so an object of options passed through to a driver needs
+  `valid.Open({})`.
 * **Initialization and shutdown.** `this.init(fn)` works on both.
   Seneca 4 adds `this.prepare(asyncFn)` for asynchronous
   initialization and `this.destroy(asyncFn)` for cleanup on close, and
   closes through the action `sys:seneca,cmd:close` rather than
   `role:seneca,cmd:close`.
 * **Promises.** Seneca 4 has `post`, `message`, `prepare` and
-  `destroy` built in, so `seneca-promisify` is a no-op there and is
-  only needed by plugins that must also run on Seneca 3.
+  `destroy` built in. Remove `seneca-promisify` and
+  `use('promisify')`: on Seneca 4 they print the deprecation
+  `SENECA_DEP_PROMISIFY`.
 * **Options.** Seneca 4 takes plugin options only from `seneca.use`
   and `options.plugin.<name>`, not from a top level `options.<name>`.
 
@@ -131,7 +140,7 @@ The validator is a shape check, not a conformance suite. It does not:
 * load the plugin, so it cannot know whether the actions, `defaults`,
   `errors` or `exports` are correct, or whether the plugin works on
   a given Seneca version;
-* inspect `defaults` (Joi or Gubu), the `errors` map or the pattern
+* inspect `defaults`, the `errors` map or the pattern
   names;
 * run or check the `prettier` script, only its presence;
 * report more than one failure per run.
